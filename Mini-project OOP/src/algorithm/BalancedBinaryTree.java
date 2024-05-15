@@ -10,7 +10,8 @@ public class BalancedBinaryTree extends BalancedTree {
 	public BalancedBinaryTree (int maxdiff) {
 		super(maxdiff);
 	}
-	
+
+	public BalancedBinaryTree(Node node, int maxdiff) { super(node, maxdiff); }
 	
 	public void balanceTree() {
 		if (this.checkTreeBalance()) return;

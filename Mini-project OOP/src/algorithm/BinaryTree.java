@@ -9,6 +9,8 @@ public class BinaryTree extends GenericTree {
 		super();
 	}
 
+	public BinaryTree(Node node) {super(); }
+
 	public void create(int numnode) {												//HAVE NOT TEST YET
 		int length = 0;
 		ArrayList<Integer> generatedNumbers = new ArrayList<>();

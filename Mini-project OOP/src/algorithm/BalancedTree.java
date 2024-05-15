@@ -16,6 +16,11 @@ public class BalancedTree extends GenericTree {
 		super();
 		this.MAX_DIFF = dif;
 	}
+
+	public BalancedTree(Node node, int dif) {
+		super(node);
+		this.MAX_DIFF = dif;
+	}
 	
 	//getter and setter
 	public int getMAX_DIFF() {
