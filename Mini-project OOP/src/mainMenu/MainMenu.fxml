@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox layoutX="23.0" layoutY="66.0" prefHeight="200.0" prefWidth="222.0">
+            <children>
+                <Button mnemonicParsing="false" onAction="#btnCreatePressed" prefHeight="25.0" prefWidth="150.0" text="Create new tree">
+                    <VBox.margin>
+                        <Insets left="10.0" top="20.0" />
+                    </VBox.margin></Button>
+                <Button mnemonicParsing="false" onAction="#btnHelpPressed" prefWidth="150.0" text="Help">
+                    <VBox.margin>
+                        <Insets left="10.0" top="20.0" />
+                    </VBox.margin>
+                </Button>
+                <Button minWidth="150.0" mnemonicParsing="false" onAction="#btnQuitPressed" text="Quit">
+                    <VBox.margin>
+                        <Insets left="10.0" top="20.0" />
+                    </VBox.margin>
+                </Button>
+            </children>
+        </VBox>
+        <Text layoutX="14.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tree Data Structure Visualization">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Text>
+        <ScrollPane fx:id="helpPane" layoutX="229.0" layoutY="66.0" prefHeight="300.0" prefWidth="400.0" visible="false">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="390.0">
+                    <children>
+                        <FlowPane prefWidth="279.0">
+                            <children>
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="   You can create new tree by clicking the button in the Main Menu. You may have to provide neccessay parameters, then click create button." wrappingWidth="380.80419921875" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="   A new tree window appear. In this window, you can choose to insert node, delete node, update node, visualize the search and travaersal algorithms" wrappingWidth="380.80419921875" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="   1. Insert node: insert a new node to specific parent node. You can choose undo if neccessary." wrappingWidth="380.80419921875" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="   2. Delete node: You enter the value of node and click the delete button." wrappingWidth="380.80419921875" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="   3. Update node: enter the old value and new value, click the update button." wrappingWidth="380.80419921875" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="   4. Search node: enter the value and click button, an animation will play to help you visualize process." wrappingWidth="380.80419921875" />
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="   5. Traversal: in this section, chooose a criterion (BFS or DFS) and click run, an animation will play. You can choose to pause or continue process. It is able to go back or next step, it will help you visualize better. When the process is done, click the stop button." wrappingWidth="380.80419921875" />
+                            </children>
+                        </FlowPane>
+                    </children>
+                </AnchorPane>
+            </content>
+        </ScrollPane>
+        <Pane fx:id="treeTypePane" layoutX="229.0" layoutY="66.0" prefHeight="300.0" prefWidth="400.0">
+            <children>
+                <VBox prefHeight="200.0">
+                    <children>
+                        <RadioButton mnemonicParsing="false" onAction="#buttonGenericTreePressed" selected="true" text="Generic Tree">
+                            <VBox.margin>
+                                <Insets left="10.0" top="20.0" />
+                            </VBox.margin>
+                            <toggleGroup>
+                                <ToggleGroup fx:id="treeType" />
+                            </toggleGroup>
+                        </RadioButton>
+                        <RadioButton mnemonicParsing="false" onAction="#buttonBinaryTreePressed" text="Binary Tree" toggleGroup="$treeType">
+                            <VBox.margin>
+                                <Insets left="10.0" top="20.0" />
+                            </VBox.margin>
+                        </RadioButton>
+                        <RadioButton mnemonicParsing="false" onAction="#buttonBalancedTreePressed" text="Balanced Tree" toggleGroup="$treeType">
+                            <VBox.margin>
+                                <Insets left="10.0" top="20.0" />
+                            </VBox.margin>
+                        </RadioButton>
+                        <RadioButton mnemonicParsing="false" onAction="#buttonBalancedBinaryTreePressed" text="Balanced Binary Tree" toggleGroup="$treeType">
+                            <VBox.margin>
+                                <Insets left="10.0" top="20.0" />
+                            </VBox.margin>
+                        </RadioButton>
+                        <Button mnemonicParsing="false" onAction="#btnCreateTreePressed" text="Create">
+                            <VBox.margin>
+                                <Insets left="10.0" top="20.0" />
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                </VBox>
+                <Label layoutX="188.0" layoutY="32.0" text="Root node:" />
+                <TextField fx:id="tfRootValue" layoutX="271.0" layoutY="27.0" prefWidth="50.0" />
+                <Label fx:id="labelMaximumDepthDiff" layoutX="188.0" layoutY="100.0" text="Maximum depth diffrence:" visible="false" />
+                <TextField fx:id="tfMaximumDepthDiff" layoutX="234.0" layoutY="125.0" prefWidth="50.0" visible="false" />
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

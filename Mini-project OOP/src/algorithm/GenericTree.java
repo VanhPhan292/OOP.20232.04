@@ -1,5 +1,7 @@
 package algorithm;
 
+import treeScreen.TreeScreenController;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -11,6 +13,8 @@ public class GenericTree implements TreeOperation {
 	public GenericTree() {
 		root = null;
 	}
+
+	public GenericTree(Node node) { this.root = node; }
 	//GETTER AND SETTER
 	public Node getRoot() {
 		return root;
@@ -18,6 +22,8 @@ public class GenericTree implements TreeOperation {
 	public void setRoot(Node root) {
 		this.root = root;
 	}
+
+	private TreeScreenController controller;
 
 	
 
@@ -207,6 +213,10 @@ public class GenericTree implements TreeOperation {
 		}
 		return depth;
 		
+	}
+
+	public void setController(TreeScreenController controller) {
+		this.controller = controller;
 	}
 	
 }
