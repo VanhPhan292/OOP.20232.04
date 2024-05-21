@@ -53,20 +53,20 @@ public class MainMenuController {
 
         if(chooseTree.equals("GenericTree")) {
             GenericTree tree = new GenericTree(root);
-            creatScreen(tree);
+            createScreen(tree);
         } else if(chooseTree.equals("BinaryTree")) {
             BinaryTree tree = new BinaryTree(root);
-            creatScreen(tree);
+            createScreen(tree);
         } else if(chooseTree.equals("Balancedtree")) {
             BalancedTree tree = new BalancedTree(root, Integer.parseInt(tfMaximumDepthDiff.getText()));
-            creatScreen(tree);
+            createScreen(tree);
         } else {
             BalancedBinaryTree tree = new BalancedBinaryTree(root, Integer.parseInt(tfMaximumDepthDiff.getText()));
-            creatScreen(tree);
+            createScreen(tree);
         }
     }
 
-    public void creatScreen(GenericTree tree){
+    public void createScreen(GenericTree tree){
         TreeScreen treeScreen = new TreeScreen(tree);
         this.mainMenuScreen.setTreeScreen(treeScreen);
         treeScreen.setMainMenu(mainMenuScreen);

@@ -1,222 +1,238 @@
 package algorithm;
 
+import java.util.LinkedList;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import treeScreen.TreeScreenController;
 
-import java.util.ArrayList;
-import java.util.Random;
-
-public class GenericTree implements TreeOperation {
-	//INSTANCE ATTRIBUTE
-	private Node root;
-
-	//CONSTRUCTOR
-	public GenericTree() {
-		root = null;
-	}
-
-	public GenericTree(Node node) { this.root = node; }
-	//GETTER AND SETTER
-	public Node getRoot() {
-		return root;
-	}
-	public void setRoot(Node root) {
-		this.root = root;
-	}
-
+public class GenericTree {
+	private Node rootNode;
+	private LinkedList<Node> queue;
+	private LinkedList<Node> traveledNode;
+	private Node currentNode;
+	private Timeline timeline;
+	private int state;
 	private TreeScreenController controller;
 
-	
+	public GenericTree(Node node) {
+		this.rootNode = node;
+	}
 
-	//TREE OPERATIONS*************************************************************************************************************************
-	
-	@Override
-	public void create(int qty) {												//HAVE NOT TEST YET
-		int length = 0;
-		ArrayList<Integer> generatedNumbers = new ArrayList<>();
-		Random random = new Random ();
-		Random rd = new Random();
-		while (generatedNumbers.size() < qty) {
-			int randomNumber = random.nextInt(100) ;
-			if(!generatedNumbers.contains(randomNumber)) {
-				length = generatedNumbers.size();
-				generatedNumbers.add(randomNumber);
-				
-				if(this.getRoot() == null) {
-					this.setRoot(new Node (randomNumber)) ;	
-				}else {
-					
-					int parent = rd.nextInt(length);
-					insert(generatedNumbers.get(parent),randomNumber);
-					
-				}	
 
-			}
+	public Node searchNode(int nodeValue) {
+		if (rootNode.getValue() == nodeValue) {
+			return rootNode;
 		}
 
-	}
-	
+		LinkedList<Node> queue = new LinkedList<Node>();
+		queue.add(rootNode);
+		Node currentNode;
 
-	@Override
-	public void insert(int p, int v) {						
-		Node parent = search(p);
-		if (parent == null) {
-			System.out.println("parent node is not exist");
-			return;
-		}else if (search( v) != null) {
-			System.out.println("The new node you want to insert is already exist");
-			return;
-		}else {
-			parent.getChildren().add(new Node(v));
-			System.out.println("The new node is inserted successfylly");
-		}
-		
-		
-	}
+		while(!queue.isEmpty()) {
+			currentNode = queue.getFirst();
 
-	@Override
-	//delete a node
-	//if this node is leaf, just make this node become null
-	//if this node is not leaf, the first child of this node will replace it
-	
-	public Node delete(int v) {
-		return deleteHelper(this.getRoot(), v);
-	}
-	protected Node deleteHelper(Node r , int v) {
-		Node result = null;
-		if (this.getRoot() == null) {
-			return null;
-		}
-		else if (r != null && r.getValue() == v) {
-			result = r;
-			if (r.isLeaf()) {
-				r = null;
-				return result ;
-			}
-			Node tmp = r.getChildren().get(0);
-			for (Node child : tmp.getChildren()) {
-				r.addNode(child);
-			}
-			r.setValue(tmp.getValue());
-			r.getChildren().remove(tmp);
-			return result;
-		}else {
-			for (Node child : r.getChildren()) {
-				result  = deleteHelper(child,v);
-				return result;
-			}
-		}
-		return result;
-		
-	}
-
-	@Override
-	public void update(int old, int newww) {							//have not tested
-		Node upt = search(old);
-		if (upt == null) {
-			System.out.println("This node is not found");
-		}else {
-			upt.setValue(newww);
-			System.out.println("This node is updated successfully");
-		}
-		
-		
-	}
-
-	@Override
-	public void traverseDFS() {
-		traverseDFSHelper(this.getRoot());
-	}
-	public void traverseDFSHelper(Node n) {								//tested
-		if (this.getRoot()== null) {
-			return;
-		}else if (n == null) {
-			return;
-		}else {
-			System.out.println(n.getValue());
-			for (Node child : n.getChildren()) {
-				traverseDFSHelper(child);
-			}
-		}
-	}
-
-	@Override
-	public Node search(int value) {
-		return searchHelper(this.getRoot(), value);
-	}
-	
-	@Override
-	public Node search(Node n) {
-		return searchHelper(this.getRoot(), n.getValue());
-	}
-
-	private Node searchHelper(Node root, int value) {							//tested
-		if(this.getRoot() == null) {
-			return null;
-		}else if (root == null){
-			return null;
-		}else if (root != null && root.getValue() == value ) {
-			return root;
-		}else {
-			for (Node child : root.getChildren()) {
-				Node result = searchHelper(child, value);
-				if (result != null) {
-					return result;
+			if (!currentNode.getChildNodes().isEmpty()) { //neu current node co con
+				for (Node node: currentNode.getChildNodes()) {
+					if (node.getValue() == nodeValue) {
+						return node;
+					} else {
+						queue.add(node);
+					}
 				}
 			}
+			queue.removeFirst();
 		}
-		return null;
+		return new Node(0);
 	}
 
-	
-	//other operation
-	
-	public Node searchParent(Node finding) {
-		return searchParentHelper(this.getRoot(), finding);
+	public boolean insertNode(int parentValue, Node childNode) {
+		Node parentNode = this.searchNode(parentValue);
+		parentNode.addChild(childNode);
+		return true;
 	}
-	private Node searchParentHelper(Node n, Node finding ) {				
-		Node result = null;
-		if (this.getRoot() == finding) {
-			return null;
-		}
-		for (Node child : n.getChildren()) {
-			if (child == finding) {
-				return n;
-			}
-		}
-		for (Node child : n .getChildren()) {
-			result = searchParentHelper(child, finding);
-			if (result != null) {
-				return result;
-			}
-		}
-		return result;
-	}
-	
-	
+	public boolean deleteNode(int nodeValue) {
+		LinkedList<Node> queue = new LinkedList<Node>();
+		queue.add(rootNode);
+		Node currentNode;
 
-	
-	public int getDepth(Node n) {
-		if (n == null) {
-			return 0;
-		}
-		int depth = 0;
-		if (n.equals(this.getRoot())) {
-			return depth;
-		}
-		Node tmp = n;
-		while(!tmp.equals(this.getRoot())) {
-			tmp = this.searchParent(tmp);
-			depth +=1;
-			if(tmp.equals(this.getRoot())) {
-				return depth;
+		while(!queue.isEmpty()) {
+			currentNode = queue.getFirst();
+
+			if (!currentNode.getChildNodes().isEmpty()) {
+				for (Node node: currentNode.getChildNodes()) {
+					if (node.getValue() == nodeValue) {
+						currentNode.deleteChild(nodeValue);
+						return true;
+					} else {
+						queue.add(node);
+					}
+				}
 			}
+			queue.removeFirst();
 		}
-		return depth;
-		
+		return false;
+	}
+
+	public Node getRootNode() {
+		return rootNode;
+	}
+
+
+	public void backBFS() {
+		if (state == 2) {
+			if (!currentNode.getChildNodes().isEmpty()) {
+				for (Node node: currentNode.getChildNodes()) {
+					queue.removeLast();
+					node.setState(0);
+				}
+			}
+			timeline.setCycleCount(timeline.getCycleCount()+1);
+			state = 1;
+		} else if (state == 1) {
+			queue.addFirst(currentNode);
+			currentNode.setState(1);
+			traveledNode.removeLast();
+			currentNode = traveledNode.getLast();
+			state = 2;
+		}
+	}
+	public void forwardBFS() {
+		if (state == 2) {
+			if (!queue.isEmpty()) {
+				currentNode = queue.getFirst();
+				queue.removeFirst();
+				traveledNode.add(currentNode);
+				currentNode.setState(state);
+				state = 1;
+			} else {
+				timeline.pause();
+			}
+		} else if (state == 1) {
+			if (!currentNode.getChildNodes().isEmpty()) {
+				for (Node node: currentNode.getChildNodes()) {
+					queue.add(node);
+					node.setState(state);
+				}
+			}
+			state = 2;
+		}
+	}
+
+	public void backDFS() {
+		if (state == 2) {
+			if (!currentNode.getChildNodes().isEmpty()) {
+				for (Node node: currentNode.getChildNodes()) {
+					queue.removeLast();
+					node.setState(0);
+				}
+			}
+			timeline.setCycleCount(timeline.getCycleCount()+1);
+			state = 1;
+		} else if (state == 1) {
+			queue.add(currentNode);
+			currentNode.setState(1);
+			traveledNode.removeLast();
+			currentNode = traveledNode.getLast();
+			state = 2;
+		}
+
+	}
+
+	public void forwardDFS() {
+		if (state == 2) {
+			if (!queue.isEmpty()) {
+				currentNode = queue.getLast();
+				queue.removeLast();
+				traveledNode.add(currentNode);
+				currentNode.setState(state);
+				state = 1;
+			} else {
+				timeline.pause();
+			}
+		} else if (state == 1) {
+			if (!currentNode.getChildNodes().isEmpty()) {
+				LinkedList<Node> childReverse = new LinkedList<Node>();
+				for (Node node: currentNode.getChildNodes()) {
+					childReverse.addFirst(node);
+				}
+				for (Node node: childReverse) {
+					queue.add(node);
+					node.setState(state);
+				}
+			}
+			state = 2;
+		}
+	}
+
+	public void updateState() {
+		LinkedList<Node> queue = new LinkedList<Node>();
+		queue.add(rootNode);
+		Node currentNode;
+
+		while(!queue.isEmpty()) {
+			currentNode = queue.getFirst();
+			currentNode.setState(0);
+			if (!currentNode.getChildNodes().isEmpty()) {
+				for (Node node: currentNode.getChildNodes()) {
+					queue.add(node);
+				}
+			}
+			queue.removeFirst();
+		}
+	}
+
+
+	public Timeline getTimeline() {
+		return timeline;
+	}
+
+	public LinkedList<Node> getQueue() {
+		return queue;
+	}
+
+	public void setQueue(LinkedList<Node> queue) {
+		this.queue = queue;
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setTraveledNode(LinkedList<Node> traveledNode) {
+		this.traveledNode = traveledNode;
+	}
+
+	public void setTimeline(Timeline timeline) {
+		this.timeline = timeline;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+
+	public LinkedList<Node> getTraveledNode() {
+		return traveledNode;
+	}
+
+	public Node getCurrentNode() {
+		return currentNode;
+	}
+
+	public void setCurrentNode(Node currentNode) {
+		this.currentNode = currentNode;
 	}
 
 	public void setController(TreeScreenController controller) {
 		this.controller = controller;
 	}
-	
+
+	public TreeScreenController getController() {
+		return controller;
+	}
 }

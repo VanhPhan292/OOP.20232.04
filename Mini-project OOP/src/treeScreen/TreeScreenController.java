@@ -29,7 +29,7 @@ import java.util.LinkedList;
 public class TreeScreenController {
     private GenericTree tree;
     private TreeScreen treeScreen;
-    private StackPane root;
+    private StackPane rootNode;
     private String choiceTraversal = new String("BFS");
     private int historyInsert;
 
@@ -108,14 +108,39 @@ public class TreeScreenController {
         tree.setController(this);
     }
 
-    /*public void initialize() {
-        this.root = this.tree.getRoot();
-        this.drawingTreePane.getChildren().add(this.root);
-        this.root.setLayoutX(this.drawingTreePane.getPrefWidth()/2);
+    public void initialize() {
+        this.rootNode = this.tree.getRootNode();
+        this.drawingTreePane.getChildren().add(this.rootNode);
+        this.rootNode.setLayoutX(this.drawingTreePane.getPrefWidth()/2);
         this.failBalance.setVisible(false);
-    }*/
+    }
 
+    @FXML
+    void btnAddNodePressed(ActionEvent event) {
+        btnUndoInsert.setVisible(true);
+        if (!Node.listValue.contains(Integer.parseInt(this.tfChild.getText()))) {
+
+            Node childNode = new Node(Integer.parseInt(this.tfChild.getText()));
+            if (tree.insertNode(Integer.parseInt(tfParent.getText()), childNode)){
+                historyInsert = childNode.getValue();
+                this.drawingTreePane.getChildren().add(childNode);
+                this.drawingTreePane.getChildren().add(childNode.getParentLine());
+            }
+            this.tfChild.clear();
+        } else {
+            this.tfChild.clear();
+            JOptionPane.showMessageDialog(null, "Added node already exist!");
+        }
+    }
+
+    public void setTree(GenericTree tree) {
+        this.tree = tree;
+    }
     public void setTreeScreen(TreeScreen treeScreen) {
         this.treeScreen = treeScreen;
+    }
+
+    public void setFailBalance(boolean appear) {
+        this.failBalance.setVisible(appear);
     }
 }
