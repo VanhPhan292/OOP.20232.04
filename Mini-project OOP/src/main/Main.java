@@ -1,9 +1,9 @@
 package main;
 
 import mainMenu.MainMenuScreen;
-import algorithm.GenericTree;
+//import algorithm.GenericTree;
 import algorithm.Node;
-import treeScreen.TreeScreen;
+//import treeScreen.TreeScreen;
 
 public class Main {
     public static void main(String[] args) {
