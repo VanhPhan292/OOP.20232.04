@@ -12,14 +12,23 @@ import javafx.scene.text.Text;
 
 public class Node extends StackPane{
 	public static LinkedList<Integer> listValue = new LinkedList<Integer>();
+
 	private int value;
+
 	private LinkedList<Node> childNodes = new LinkedList<Node>();
+
 	private Node parentNode;
+
 	private Circle circle;
+
 	private Text nodeValue;
+
 	private Line parentLine;
+
 	private int depth = 0;
+
 	private int state = 1;
+
 	private boolean leave;
 
 	public Node(int value) {
@@ -79,9 +88,9 @@ public class Node extends StackPane{
 	}
 
 	public void addUpdate() {
-		LinkedList<Node> queue = new LinkedList<Node>();
-		queue.add(this);
-		Node currentNode;
+		LinkedList<Node> ll = new LinkedList<Node>();
+		ll.add(this);
+		Node curNode;
 
 		int distance;
 		if (depth == 0) {
@@ -92,29 +101,29 @@ public class Node extends StackPane{
 			distance = 40;
 		}
 
-		while(!queue.isEmpty()) {
-			currentNode = queue.getFirst();
-			if (!currentNode.getChildNodes().isEmpty()) {
-				for (Node node: currentNode.getChildNodes()) {
+		while(!ll.isEmpty()) {
+			curNode = ll.getFirst();
+			if (!curNode.getChildNodes().isEmpty()) {
+				for (Node node: curNode.getChildNodes()) {
 					node.setLayoutX(node.getLayoutX()-distance);
-					node.getParentLine().setLayoutX(currentNode.getLayoutX()+30);
-					node.getParentLine().setEndX(node.getLayoutX()-currentNode.getLayoutX());
-					queue.add(node);
+					node.getParentLine().setLayoutX(curNode.getLayoutX()+30);
+					node.getParentLine().setEndX(node.getLayoutX()-curNode.getLayoutX());
+					ll.add(node);
 				}
 			}
-			queue.removeFirst();
+			ll.removeFirst();
 		}
 	}
 	public void deleteUpdate() {
-		LinkedList<Node> queue = new LinkedList<Node>();
-		queue.add(this);
-		Node currentNode;
+		LinkedList<Node> ll = new LinkedList<Node>();
+		ll.add(this);
+		Node curNode;
 
-		while(!queue.isEmpty()) {
-			currentNode = queue.getFirst();
+		while(!ll.isEmpty()) {
+			curNode = ll.getFirst();
 
-			if (!currentNode.getChildNodes().isEmpty()) {
-				for (Node node: currentNode.getChildNodes()) {
+			if (!curNode.getChildNodes().isEmpty()) {
+				for (Node node: curNode.getChildNodes()) {
 					if (node.getDepth() == 1) {
 						node.setLayoutX(node.getLayoutX()+250);
 					} else if (node.getDepth() == 2) {
@@ -122,15 +131,14 @@ public class Node extends StackPane{
 					} else {
 						node.setLayoutX(node.getLayoutX()+40);
 					}
-					node.getParentLine().setLayoutX(currentNode.getLayoutX()+30);
-					node.getParentLine().setEndX(node.getLayoutX()-currentNode.getLayoutX());
-					queue.add(node);
+					node.getParentLine().setLayoutX(curNode.getLayoutX()+30);
+					node.getParentLine().setEndX(node.getLayoutX()-curNode.getLayoutX());
+					ll.add(node);
 				}
 			}
-			queue.removeFirst();
+			ll.removeFirst();
 		}
 	}
-
 
 	public boolean equals(Object o) {
 		if (o instanceof Node) {
@@ -145,28 +153,24 @@ public class Node extends StackPane{
 		}
 	}
 
-	public void setChildNodes(LinkedList<Node> childNodes) {
-		this.childNodes = childNodes;
-	}
-
-	public int getDepth() {
-		return depth;
-	}
-
-	public void setDepth(int depth) {
-		this.depth = depth;
-	}
-
 	public int getValue() {
 		return value;
+	}
+
+	public void setValue(int value) {
+		int valueIndex = Node.listValue.indexOf(this.value);
+		Node.listValue.remove(valueIndex);
+		this.value = value;
+		this.nodeValue.setText(value+"");
+		Node.listValue.add(value);
 	}
 
 	public LinkedList<Node> getChildNodes() {
 		return childNodes;
 	}
 
-	public Line getParentLine() {
-		return parentLine;
+	public void setChildNodes(LinkedList<Node> childNodes) {
+		this.childNodes = childNodes;
 	}
 
 	public Node getParentNode() {
@@ -181,6 +185,18 @@ public class Node extends StackPane{
 		return circle;
 	}
 
+	public Line getParentLine() {
+		return parentLine;
+	}
+
+	public int getDepth() {
+		return depth;
+	}
+
+	public void setDepth(int depth) {
+		this.depth = depth;
+	}
+
 	public void setState(int state) {
 		this.state = state;
 		if (state == 0) {
@@ -190,14 +206,6 @@ public class Node extends StackPane{
 		} else if (state == 2) {
 			circle.setFill(Color.LIGHTBLUE);
 		}
-	}
-
-	public void setValue(int value) {
-		int valueIndex = Node.listValue.indexOf(this.value);
-		Node.listValue.remove(valueIndex);
-		this.value = value;
-		this.nodeValue.setText(value+"");
-		Node.listValue.add(value);
 	}
 
 	public boolean isLeave() {

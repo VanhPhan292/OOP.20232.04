@@ -24,7 +24,7 @@ public class MainMenuScreen extends JFrame{
         super();
         JFXPanel fxPanel = new JFXPanel();
         this.add(fxPanel);
-        this.setSize(600, 400);
+        this.setSize(800, 600);
         this.setTitle("Main Menu");
         this.setVisible(true);
         this.addWindowListener(new WindowAdapter() {

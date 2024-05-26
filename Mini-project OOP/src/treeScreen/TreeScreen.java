@@ -25,13 +25,13 @@ public class TreeScreen extends JFrame{
         JFXPanel fxPanel = new JFXPanel();
         this.add(fxPanel);
 
-        this.setSize(1024, 768);
+        this.setSize(800, 600);
         this.setTitle("Tree");
         this.setVisible(false);
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent we) {
                 int result = JOptionPane.showConfirmDialog(null,
-                        "Do you want to Exit ?", "Exit Confirmation : ",
+                        "Exit ?", "Confirmation : ",
                         JOptionPane.YES_NO_OPTION);
                 if (result == JOptionPane.YES_OPTION)
                     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
