@@ -231,4 +231,10 @@ public class GenericTree {
 	public void setController(TreeScreenController controller) {
 		this.controller = controller;
 	}
+	public LinkedList<Node> getQueue() {
+		return ll;
+	}
+	public void setQueue(LinkedList<Node> queue) {
+		this.ll = queue;
+	}
 }
