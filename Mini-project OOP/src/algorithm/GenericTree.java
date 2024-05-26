@@ -2,21 +2,28 @@ package algorithm;
 
 import java.util.LinkedList;
 
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.paint.Color;
-import javafx.util.Duration;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import treeScreen.TreeScreenController;
 
 public class GenericTree {
 	private Node rootNode;
-	private LinkedList<Node> queue;
+
+	private LinkedList<Node> ll;
+
 	private LinkedList<Node> traveledNode;
+
 	private Node currentNode;
+
 	private Timeline timeline;
+
 	private int state;
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
+
 	private TreeScreenController controller;
 
 	public GenericTree(Node node) {
@@ -29,23 +36,23 @@ public class GenericTree {
 			return rootNode;
 		}
 
-		LinkedList<Node> queue = new LinkedList<Node>();
-		queue.add(rootNode);
+		LinkedList<Node> ll = new LinkedList<Node>();
+		ll.add(rootNode);
 		Node currentNode;
 
-		while(!queue.isEmpty()) {
-			currentNode = queue.getFirst();
+		while(!ll.isEmpty()) {
+			currentNode = ll.getFirst();
 
 			if (!currentNode.getChildNodes().isEmpty()) { //neu current node co con
 				for (Node node: currentNode.getChildNodes()) {
 					if (node.getValue() == nodeValue) {
 						return node;
 					} else {
-						queue.add(node);
+						ll.add(node);
 					}
 				}
 			}
-			queue.removeFirst();
+			ll.removeFirst();
 		}
 		return new Node(0);
 	}
@@ -56,12 +63,12 @@ public class GenericTree {
 		return true;
 	}
 	public boolean deleteNode(int nodeValue) {
-		LinkedList<Node> queue = new LinkedList<Node>();
-		queue.add(rootNode);
+		LinkedList<Node> ll = new LinkedList<Node>();
+		ll.add(rootNode);
 		Node currentNode;
 
-		while(!queue.isEmpty()) {
-			currentNode = queue.getFirst();
+		while(!ll.isEmpty()) {
+			currentNode = ll.getFirst();
 
 			if (!currentNode.getChildNodes().isEmpty()) {
 				for (Node node: currentNode.getChildNodes()) {
@@ -69,32 +76,27 @@ public class GenericTree {
 						currentNode.deleteChild(nodeValue);
 						return true;
 					} else {
-						queue.add(node);
+						ll.add(node);
 					}
 				}
 			}
-			queue.removeFirst();
+			ll.removeFirst();
 		}
 		return false;
 	}
-
-	public Node getRootNode() {
-		return rootNode;
-	}
-
 
 	public void backBFS() {
 		if (state == 2) {
 			if (!currentNode.getChildNodes().isEmpty()) {
 				for (Node node: currentNode.getChildNodes()) {
-					queue.removeLast();
+					ll.removeLast();
 					node.setState(0);
 				}
 			}
 			timeline.setCycleCount(timeline.getCycleCount()+1);
 			state = 1;
 		} else if (state == 1) {
-			queue.addFirst(currentNode);
+			ll.addFirst(currentNode);
 			currentNode.setState(1);
 			traveledNode.removeLast();
 			currentNode = traveledNode.getLast();
@@ -103,9 +105,9 @@ public class GenericTree {
 	}
 	public void forwardBFS() {
 		if (state == 2) {
-			if (!queue.isEmpty()) {
-				currentNode = queue.getFirst();
-				queue.removeFirst();
+			if (!ll.isEmpty()) {
+				currentNode = ll.getFirst();
+				ll.removeFirst();
 				traveledNode.add(currentNode);
 				currentNode.setState(state);
 				state = 1;
@@ -115,7 +117,7 @@ public class GenericTree {
 		} else if (state == 1) {
 			if (!currentNode.getChildNodes().isEmpty()) {
 				for (Node node: currentNode.getChildNodes()) {
-					queue.add(node);
+					ll.add(node);
 					node.setState(state);
 				}
 			}
@@ -127,14 +129,14 @@ public class GenericTree {
 		if (state == 2) {
 			if (!currentNode.getChildNodes().isEmpty()) {
 				for (Node node: currentNode.getChildNodes()) {
-					queue.removeLast();
+					ll.removeLast();
 					node.setState(0);
 				}
 			}
 			timeline.setCycleCount(timeline.getCycleCount()+1);
 			state = 1;
 		} else if (state == 1) {
-			queue.add(currentNode);
+			ll.add(currentNode);
 			currentNode.setState(1);
 			traveledNode.removeLast();
 			currentNode = traveledNode.getLast();
@@ -145,9 +147,9 @@ public class GenericTree {
 
 	public void forwardDFS() {
 		if (state == 2) {
-			if (!queue.isEmpty()) {
-				currentNode = queue.getLast();
-				queue.removeLast();
+			if (!ll.isEmpty()) {
+				currentNode = ll.getLast();
+				ll.removeLast();
 				traveledNode.add(currentNode);
 				currentNode.setState(state);
 				state = 1;
@@ -161,7 +163,7 @@ public class GenericTree {
 					childReverse.addFirst(node);
 				}
 				for (Node node: childReverse) {
-					queue.add(node);
+					ll.add(node);
 					node.setState(state);
 				}
 			}
@@ -170,54 +172,40 @@ public class GenericTree {
 	}
 
 	public void updateState() {
-		LinkedList<Node> queue = new LinkedList<Node>();
-		queue.add(rootNode);
+		LinkedList<Node> ll = new LinkedList<Node>();
+		ll.add(rootNode);
 		Node currentNode;
 
-		while(!queue.isEmpty()) {
-			currentNode = queue.getFirst();
+		while(!ll.isEmpty()) {
+			currentNode = ll.getFirst();
 			currentNode.setState(0);
 			if (!currentNode.getChildNodes().isEmpty()) {
 				for (Node node: currentNode.getChildNodes()) {
-					queue.add(node);
+					ll.add(node);
 				}
 			}
-			queue.removeFirst();
+			ll.removeFirst();
 		}
 	}
 
-
-	public Timeline getTimeline() {
-		return timeline;
+	public Node getRootNode() {
+		return rootNode;
 	}
 
-	public LinkedList<Node> getQueue() {
-		return queue;
+	public LinkedList<Node> getLl() {
+		return ll;
 	}
 
-	public void setQueue(LinkedList<Node> queue) {
-		this.queue = queue;
+	public void setLl(LinkedList<Node> ll) {
+		this.ll = ll;
 	}
 
-	public int getState() {
-		return state;
+	public LinkedList<Node> getTraveledNode() {
+		return traveledNode;
 	}
 
 	public void setTraveledNode(LinkedList<Node> traveledNode) {
 		this.traveledNode = traveledNode;
-	}
-
-	public void setTimeline(Timeline timeline) {
-		this.timeline = timeline;
-	}
-
-	public void setState(int state) {
-		this.state = state;
-	}
-
-
-	public LinkedList<Node> getTraveledNode() {
-		return traveledNode;
 	}
 
 	public Node getCurrentNode() {
@@ -228,11 +216,19 @@ public class GenericTree {
 		this.currentNode = currentNode;
 	}
 
-	public void setController(TreeScreenController controller) {
-		this.controller = controller;
+	public Timeline getTimeline() {
+		return timeline;
+	}
+
+	public void setTimeline(Timeline timeline) {
+		this.timeline = timeline;
 	}
 
 	public TreeScreenController getController() {
 		return controller;
+	}
+
+	public void setController(TreeScreenController controller) {
+		this.controller = controller;
 	}
 }

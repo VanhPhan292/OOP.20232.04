@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <center>
-        <Pane fx:id="drawingTreePane" prefWidth="1024.0" BorderPane.alignment="CENTER">
+        <Pane fx:id="drawingTreePane" prefWidth="800.0" BorderPane.alignment="CENTER">
             <children>
                 <Rectangle fx:id="pseudoCode1" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="700.0" layoutY="377.0" stroke="WHITE" strokeType="INSIDE" visible="false" width="300.0" />
                 <Rectangle fx:id="pseudoCode2" arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="700.0" layoutY="412.0" stroke="WHITE" strokeType="INSIDE" visible="false" width="300.0" />
