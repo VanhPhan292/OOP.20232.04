@@ -315,7 +315,7 @@ public class TreeScreenController {
         }
     }
     @FXML
-    void btnSearchPressed(ActionEvent event) {  // the same as method traversalBFS in GenericTree, only add an extra condition
+    void btnSearchPressed(ActionEvent event) {  // them dieu kien cho traversalBFS
 
 	    Node searchedNode = tree.searchNode(Integer.parseInt(this.tfSearchFor.getText()));
         Timeline timeline = new Timeline();
@@ -332,7 +332,7 @@ public class TreeScreenController {
                                 tree.getCurrentNode().getCircle().setFill(Color.LIGHTBLUE);
                                 tree.setState(2);
 
-                                if (tree.getCurrentNode() == searchedNode){         //extra condition
+                                if (tree.getCurrentNode() == searchedNode){         //them dieu kien
                                     for (int i:Node.listValue){
                                         Node node = tree.searchNode(i);
                                         node.getCircle().setFill(Color.WHITE);
