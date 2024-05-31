@@ -247,6 +247,19 @@ public class TreeScreenController {
 			  			queueUpdate();
 			  		}
 			} );
+			
+			tree.setState(2);
+    	tree.setQueue(new LinkedList<Node>());
+    	tree.setTraveledNode(new LinkedList<Node>());
+    	tree.getQueue().add(tree.getRootNode());
+    	queueUpdate();
+    	
+    	Timeline timeline = new Timeline();
+    	timeline.getKeyFrames().add(step);
+    	timeline.setCycleCount(Timeline.INDEFINITE);
+    	
+    	tree.setTimeline(timeline);
+    	tree.getTimeline().play();
     }
     
     void traversalDFS() {
@@ -258,6 +271,18 @@ public class TreeScreenController {
     					queueUpdate();
     				}
     	});
+    	
+    	tree.setState(2);
+    	tree.setQueue(new LinkedList<Node>());
+    	tree.setTraveledNode(new LinkedList<Node>());
+    	tree.getQueue().add(tree.getRootNode());
+    	
+    	Timeline timeline = new Timeline();
+    	timeline.getKeyFrames().add(step);
+    	timeline.setCycleCount(Timeline.INDEFINITE);
+    	
+    	tree.setTimeline(timeline);
+    	tree.getTimeline().play();
     }
     
     @FXML
@@ -300,9 +325,9 @@ public class TreeScreenController {
     
     @FXML
     void buttonUpdate(ActionEvent event) {
-    	for (int i:Node.listValue) {
+    	/*for (int i:Node.listValue) {
     		System.out.println(i);
-    	}
+    	}*/ //for testing purpose
         if (Node.listValue.contains(Integer.parseInt(this.tfUpdateOldValue.getText()))) {
             if (!Node.listValue.contains(Integer.parseInt(this.tfUpdateNewValue.getText()))) {
 	            Node oldNode = tree.searchNode(Integer.parseInt(this.tfUpdateOldValue.getText()));
@@ -441,3 +466,9 @@ public class TreeScreenController {
 		}
     }
 }
+
+
+
+
+
+
