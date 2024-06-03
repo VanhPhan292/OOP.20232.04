@@ -9,7 +9,6 @@
 - Eclipse, Intellij IDE.
 
 # Setup instruction:
-Setup instruction:
 - Clone the repository to your local workspace.
 - Import the java and javafx library to your workspace.
 - Run the main.java file to start the program.
