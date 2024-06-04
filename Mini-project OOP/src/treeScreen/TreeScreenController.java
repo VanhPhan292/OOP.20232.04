@@ -111,7 +111,9 @@ public class TreeScreenController {
     public void initialize() {
         this.rootNode = this.tree.getRootNode();
         this.drawingTreePane.getChildren().add(this.rootNode);
-        this.rootNode.setLayoutX(this.drawingTreePane.getPrefWidth()/2);
+        this.rootNode.layoutXProperty().bind(drawingTreePane.widthProperty().subtract(this.rootNode.widthProperty()).divide(2));
+//        this.rootNode.layoutYProperty().bind(drawingTreePane.heightProperty().subtract(this.rootNode.heightProperty()).divide(2));
+
         this.failBalance.setVisible(false);
     }
 
