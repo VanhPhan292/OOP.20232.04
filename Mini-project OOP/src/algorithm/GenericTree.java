@@ -2,8 +2,9 @@ package algorithm;
 
 import java.util.LinkedList;
 
+import controller.TreeSceneController;
 import javafx.animation.Timeline;
-import treeScreen.TreeScreenController;
+
 
 public class GenericTree {
 	private Node rootNode;
@@ -17,6 +18,7 @@ public class GenericTree {
 	private Timeline timeline;
 
 	private int state;
+	
 	public int getState() {
 		return state;
 	}
@@ -24,7 +26,7 @@ public class GenericTree {
 		this.state = state;
 	}
 
-	private TreeScreenController controller;
+	private TreeSceneController controller;
 
 	public GenericTree(Node node) {
 		this.rootNode = node;
@@ -224,13 +226,15 @@ public class GenericTree {
 		this.timeline = timeline;
 	}
 
-	public TreeScreenController getController() {
+	public TreeSceneController getController() {
 		return controller;
 	}
 
-	public void setController(TreeScreenController controller) {
-		this.controller = controller;
+	public void setController(TreeSceneController treeSceneController) {
+		this.controller = treeSceneController;
 	}
+	
+	
 	public LinkedList<Node> getQueue() {
 		return ll;
 	}

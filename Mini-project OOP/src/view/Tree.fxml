@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TreeSceneController">
+   <top>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="278.0" text="Tree Data Structure Visualization">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#btnRedoPressed" text="Redo" />
+                  <Button mnemonicParsing="false" onAction="#backToMain" text="Back to main menu" />
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </HBox>
+            <TabPane prefHeight="200.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Insert Node">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="24.0" layoutY="23.0" text="Parent node value: ">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="24.0" layoutY="51.0" text="Child node value: ">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="61.0" layoutY="82.0" mnemonicParsing="false" onAction="#btnInsertPressed" text="Insert" />
+                              <TextField fx:id="tfInsertParent" layoutX="157.0" layoutY="20.0" prefHeight="25.0" prefWidth="75.0" />
+                              <TextField fx:id="tfInsertChild" layoutX="157.0" layoutY="48.0" prefHeight="25.0" prefWidth="75.0" />
+                              <Button fx:id="btnInsertUndo" layoutX="124.0" layoutY="82.0" mnemonicParsing="false" onAction="#btnInsertUndoPressed" text="Undo" />
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Delete Node">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="126.0" prefWidth="800.0">
+                           <children>
+                              <Label layoutX="55.0" layoutY="24.0" text="Node value:">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="tfDeleteValue" layoutX="151.0" layoutY="20.0" prefHeight="25.0" prefWidth="75.0" />
+                              <Button layoutX="61.0" layoutY="71.0" mnemonicParsing="false" onAction="#btnDeleteNodePressed" text="Delete Node" />
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Update Node">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="41.0" layoutY="23.0" text="Old value:">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="41.0" layoutY="61.0" text="New value:">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="42.0" layoutY="83.0" mnemonicParsing="false" onAction="#buttonUpdatePressed" text="Update Node Value" />
+                              <TextField fx:id="tfUpdateOldValue" layoutX="138.0" layoutY="19.0" prefHeight="25.0" prefWidth="75.0" />
+                              <TextField fx:id="tfUpdateNewValue" layoutX="138.0" layoutY="57.0" prefHeight="25.0" prefWidth="75.0" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Search Node">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="tfSearchValue" layoutX="129.0" layoutY="20.0" prefHeight="25.0" prefWidth="75.0" />
+                              <Label layoutX="41.0" layoutY="24.0" text="Node value:">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="43.0" layoutY="61.0" mnemonicParsing="false" onAction="#btnSearchPressed" text="Search" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Traversal">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <RadioButton layoutX="32.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnChoiceBFSPressed" text="Breadth-First Search" />
+                              <RadioButton layoutX="32.0" layoutY="52.0" mnemonicParsing="false" onAction="#btnChoiceDFSPressed" text="Depth-First Search" />
+                              <Button layoutX="32.0" layoutY="82.0" mnemonicParsing="false" onAction="#btnTraversalPressed" text="Traversal" />
+                              <Button layoutX="108.0" layoutY="82.0" mnemonicParsing="false" onAction="#btnTraversalStopPressed" text="Stop" />
+                              <AnchorPane layoutX="206.0" layoutY="20.0" prefHeight="82.0" prefWidth="203.0">
+                                 <children>
+                                    <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnTraversalPausePressed" prefHeight="26.0" prefWidth="65.0" text="Pause" />
+                                    <Button layoutX="14.0" layoutY="41.0" mnemonicParsing="false" onAction="#btnTraversalContinuePressed" text="Continue" />
+                                    <Button layoutX="102.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnTraversalForwardPressed" text="Forward" />
+                                    <Button layoutX="102.0" layoutY="41.0" mnemonicParsing="false" onAction="#btnTraversalBackwardPressed" text="Backward" />
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <Pane fx:id="drawingPane" prefWidth="1400.0" style="-fx-border-color: #000000;" BorderPane.alignment="CENTER">
+         <children>
+            <StackPane layoutX="527.0" layoutY="173.0" prefHeight="197.0" prefWidth="247.0">
+               <children>
+                  <VBox fx:id="bfsPseudoCode" prefHeight="200.0" prefWidth="202.0" spacing="10.0">
+                     <children>
+                        <Label text="q.enqueue(root)">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="while q is not empty:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="u = q.dequeue()">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="for child v of u:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="q.enqueue(v)">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </StackPane>
+            <Label fx:id="warningLabel" layoutX="14.0" layoutY="14.0" text="Warning: the tree is not balanced!" textFill="#f43333">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <FlowPane fx:id="queueFlowPane" layoutX="42.0" layoutY="310.0" prefHeight="62.0" prefWidth="381.0" />
+            <VBox fx:id="dfsPseudoCode" layoutX="233.0" layoutY="161.0" prefHeight="200.0" prefWidth="220.0" spacing="10.0">
+               <children>
+                  <Label fx:id="pseudoCode1" text="stack.push(root)">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="pseudoCode2" text="while stack is not empty">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="pseudoCode3" text="u = stack.pop">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="pseudoCode4" text="for child v of u">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="pseudoCode5" text="stack.push(v)">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>
