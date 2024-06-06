@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
@@ -62,13 +63,13 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="126.0" prefWidth="800.0">
                            <children>
-                              <Label layoutX="55.0" layoutY="24.0" text="Node value:">
+                              <Label layoutX="50.0" layoutY="36.0" text="Node value:">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="tfDeleteValue" layoutX="151.0" layoutY="20.0" prefHeight="25.0" prefWidth="75.0" />
-                              <Button layoutX="61.0" layoutY="71.0" mnemonicParsing="false" onAction="#btnDeleteNodePressed" text="Delete Node" />
+                              <TextField fx:id="tfDeleteValue" layoutX="149.0" layoutY="33.0" prefHeight="25.0" prefWidth="75.0" />
+                              <Button layoutX="87.0" layoutY="73.0" mnemonicParsing="false" onAction="#btnDeleteNodePressed" text="Delete Node" />
                            </children></AnchorPane>
                   </content>
                 </Tab>
@@ -76,19 +77,19 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Label layoutX="41.0" layoutY="23.0" text="Old value:">
+                              <Label layoutX="44.0" layoutY="13.0" text="Old value:">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="41.0" layoutY="61.0" text="New value:">
+                              <Label layoutX="44.0" layoutY="51.0" text="New value:">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="42.0" layoutY="83.0" mnemonicParsing="false" onAction="#buttonUpdatePressed" text="Update Node Value" />
-                              <TextField fx:id="tfUpdateOldValue" layoutX="138.0" layoutY="19.0" prefHeight="25.0" prefWidth="75.0" />
-                              <TextField fx:id="tfUpdateNewValue" layoutX="138.0" layoutY="57.0" prefHeight="25.0" prefWidth="75.0" />
+                              <Button layoutX="63.0" layoutY="82.0" mnemonicParsing="false" onAction="#buttonUpdatePressed" text="Update Node Value" />
+                              <TextField fx:id="tfUpdateOldValue" layoutX="138.0" layoutY="10.0" prefHeight="25.0" prefWidth="75.0" />
+                              <TextField fx:id="tfUpdateNewValue" layoutX="138.0" layoutY="48.0" prefHeight="25.0" prefWidth="75.0" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -97,13 +98,13 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextField fx:id="tfSearchValue" layoutX="129.0" layoutY="20.0" prefHeight="25.0" prefWidth="75.0" />
+                              <TextField fx:id="tfSearchValue" layoutX="137.0" layoutY="21.0" prefHeight="25.0" prefWidth="75.0" />
                               <Label layoutX="41.0" layoutY="24.0" text="Node value:">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <Button layoutX="43.0" layoutY="61.0" mnemonicParsing="false" onAction="#btnSearchPressed" text="Search" />
+                              <Button layoutX="73.0" layoutY="61.0" mnemonicParsing="false" onAction="#btnSearchPressed" prefHeight="26.0" prefWidth="82.0" text="Search" />
                            </children>
                         </AnchorPane>
                     </content>
@@ -112,18 +113,32 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <RadioButton layoutX="32.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnChoiceBFSPressed" text="Breadth-First Search" />
-                              <RadioButton layoutX="32.0" layoutY="52.0" mnemonicParsing="false" onAction="#btnChoiceDFSPressed" text="Depth-First Search" />
-                              <Button layoutX="32.0" layoutY="82.0" mnemonicParsing="false" onAction="#btnTraversalPressed" text="Traversal" />
-                              <Button layoutX="108.0" layoutY="82.0" mnemonicParsing="false" onAction="#btnTraversalStopPressed" text="Stop" />
-                              <AnchorPane layoutX="206.0" layoutY="20.0" prefHeight="82.0" prefWidth="203.0">
+                              <RadioButton layoutX="32.0" layoutY="21.0" mnemonicParsing="false" onAction="#btnChoiceBFSPressed" text="Breadth-First Search">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="traversal" />
+                                 </toggleGroup></RadioButton>
+                              <RadioButton layoutX="32.0" layoutY="52.0" mnemonicParsing="false" onAction="#btnChoiceDFSPressed" text="Depth-First Search" toggleGroup="$traversal" />
+                              <Button fx:id="btnTraversal" layoutX="32.0" layoutY="82.0" mnemonicParsing="false" onAction="#btnTraversalPressed" text="Traversal" />
+                              <Button fx:id="btnTraversalStop" layoutX="107.0" layoutY="81.0" mnemonicParsing="false" onAction="#btnTraversalStopPressed" prefHeight="26.0" prefWidth="62.0" text="Stop" />
+                              <VBox fx:id="navigationBox" layoutX="210.0" layoutY="11.0" prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnTraversalPausePressed" prefHeight="26.0" prefWidth="65.0" text="Pause" />
-                                    <Button layoutX="14.0" layoutY="41.0" mnemonicParsing="false" onAction="#btnTraversalContinuePressed" text="Continue" />
-                                    <Button layoutX="102.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnTraversalForwardPressed" text="Forward" />
-                                    <Button layoutX="102.0" layoutY="41.0" mnemonicParsing="false" onAction="#btnTraversalBackwardPressed" text="Backward" />
+                                    <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#btnTraversalPausePressed" prefHeight="25.0" prefWidth="75.0" text="Pause" />
+                                          <Button mnemonicParsing="false" onAction="#btnTraversalContinuePressed" prefHeight="25.0" prefWidth="75.0" text="Continue" />
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox fx:id="stepBox" alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="10.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#btnTraversalForwardPressed" prefHeight="25.0" prefWidth="75.0" text="Forward" />
+                                          <Button mnemonicParsing="false" onAction="#btnTraversalBackwardPressed" prefHeight="25.0" prefWidth="75.0" text="Backward" />
+                                       </children>
+                                    </HBox>
                                  </children>
-                              </AnchorPane>
+                              </VBox>
                            </children>
                         </AnchorPane>
                     </content>
@@ -134,9 +149,9 @@
       </VBox>
    </top>
    <center>
-      <Pane fx:id="drawingPane" prefWidth="1400.0" style="-fx-border-color: #000000;" BorderPane.alignment="CENTER">
+      <Pane fx:id="drawingPane" prefWidth="1400.0" BorderPane.alignment="CENTER">
          <children>
-            <StackPane layoutX="527.0" layoutY="173.0" prefHeight="197.0" prefWidth="247.0">
+            <StackPane layoutX="1120.0" layoutY="313.0" prefHeight="197.0" prefWidth="247.0">
                <children>
                   <VBox fx:id="bfsPseudoCode" prefHeight="200.0" prefWidth="202.0" spacing="10.0">
                      <children>
@@ -177,8 +192,8 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <FlowPane fx:id="queueFlowPane" layoutX="42.0" layoutY="310.0" prefHeight="62.0" prefWidth="381.0" />
-            <VBox fx:id="dfsPseudoCode" layoutX="233.0" layoutY="161.0" prefHeight="200.0" prefWidth="220.0" spacing="10.0">
+            <FlowPane fx:id="queueFlowPane" layoutX="54.0" layoutY="411.0" prefHeight="60.0" />
+            <VBox fx:id="dfsPseudoCode" layoutX="855.0" layoutY="306.0" prefHeight="175.0" prefWidth="194.0" spacing="10.0">
                <children>
                   <Label fx:id="pseudoCode1" text="stack.push(root)">
                      <font>

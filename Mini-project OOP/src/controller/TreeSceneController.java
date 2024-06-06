@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -70,6 +71,7 @@ public class TreeSceneController implements Initializable {
     
     @FXML
     private Label warningLabel;
+    
     @FXML
     private Button btnInsertUndo;
     @FXML
@@ -94,9 +96,27 @@ public class TreeSceneController implements Initializable {
     private FlowPane queueFlowPane;
     
 
+    @FXML
+    private VBox navigationBox;
+    
+    @FXML
+    private HBox stepBox;
+    
+    @FXML
+    private Button btnTraversal;
+    
+
+    @FXML
+    private Button btnTraversalStop;
+
+    
+
+    
 	public void setMainApp(MyApp mainapp) {
 		this.myApp = mainapp;
 	}
+	
+	
 	
 	
 	public void setTree(GenericTree tree) {
@@ -114,6 +134,8 @@ public class TreeSceneController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.warningLabel.setVisible(false);
+		this.navigationBox.setVisible(false);
+		this.stepBox.setVisible(false);
 	}
 	
 //INSERT TAB PANE
@@ -286,13 +308,18 @@ public class TreeSceneController implements Initializable {
     
     @FXML
     void btnTraversalPressed(ActionEvent event) {
-//    	btnRun.setVisible(false);
-//    	btnStop.setVisible(true);
+    	
+    	this.navigationBox.setVisible(true);
+    	
+    	this.btnTraversal.setVisible(false);
+    	
+    	this.btnTraversalStop.setVisible(true);
+    	
     	pseudoCode1.setVisible(true);
     	pseudoCode2.setVisible(true);
     	pseudoCode3.setVisible(true);
     	pseudoCode4.setVisible(true);
-//    	boxControl.setVisible(true);
+
     	queueFlowPane.setVisible(true);
     	
     	
@@ -312,9 +339,10 @@ public class TreeSceneController implements Initializable {
     	tree.getTimeline().stop();
     	tree.updateState();
     	
-//    	boxControl.setVisible(false);
-//    	boxNevigate.setVisible(false);
-//    	btnStop.setVisible(false);
+    	this.btnTraversalStop.setVisible(false);
+    	this.navigationBox.setVisible(false);
+    	this.btnTraversal.setVisible(true);
+
     	pseudoCode1.setVisible(false);
     	pseudoCode2.setVisible(false);
     	pseudoCode3.setVisible(false);
@@ -322,7 +350,7 @@ public class TreeSceneController implements Initializable {
     	bfsPseudoCode.setVisible(false);
     	dfsPseudoCode.setVisible(false);
     	queueFlowPane.setVisible(false);
-//    	btnRun.setVisible(true);
+    	
     	
     	
     }
@@ -332,7 +360,7 @@ public class TreeSceneController implements Initializable {
 
     @FXML
     void btnTraversalContinuePressed(ActionEvent event) {
-//    	this.boxNevigate.setVisible(false);
+    	this.stepBox.setVisible(false);
     	tree.getTimeline().play();
     }
     
@@ -340,7 +368,8 @@ public class TreeSceneController implements Initializable {
     @FXML
     void btnTraversalPausePressed(ActionEvent event) {
     	tree.getTimeline().pause();
-//    	this.boxNevigate.setVisible(true);
+    	this.stepBox.setVisible(true);
+
     }
     
     
