@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import util.AlertUtil;
 
 
 public class MainController implements Initializable{
@@ -48,28 +49,54 @@ public class MainController implements Initializable{
     
     @FXML
     void createTree(ActionEvent event) {
-    	
-    	Node root = new Node(Integer.parseInt(this.tfRootValue.getText()));
-    	
-        if(chooseTree.equals("GenericTree")) {
-            GenericTree tree = new GenericTree(root);
-            myApp.setTree(tree);
+    	try {
             
-        } else if(chooseTree.equals("BinaryTree")) {
-            BinaryTree tree = new BinaryTree(root);
-            myApp.setTree(tree);
+            String rootValueText = this.tfRootValue.getText();
             
-        } else if(chooseTree.equals("Balancedtree")) {
-            BalancedTree tree = new BalancedTree(root, Integer.parseInt(tfMaxDepth.getText()));
-            myApp.setTree(tree);
+            if (rootValueText.isEmpty()) {
+                throw new IllegalArgumentException("Root value is empty.");
+            }
+            int rootValue = Integer.parseInt(rootValueText);
+
             
-        } else {
-            BalancedBinaryTree tree = new BalancedBinaryTree(root, Integer.parseInt(tfMaxDepth.getText()));
-            myApp.setTree(tree);
+            Node root = new Node(rootValue);
+
+            
+            if (chooseTree.equals("GenericTree")) {
+                GenericTree tree = new GenericTree(root);
+                myApp.setTree(tree);
+            } else if (chooseTree.equals("BinaryTree")) {
+                BinaryTree tree = new BinaryTree(root);
+                myApp.setTree(tree);
+            } else if (chooseTree.equals("BalancedTree")) {
+                String maxDepthText = tfMaxDepth.getText();
+                if (maxDepthText.isEmpty()) {
+                    throw new IllegalArgumentException("Max depth is empty.");
+                }
+                int maxDepth = Integer.parseInt(maxDepthText);
+                
+                BalancedTree tree = new BalancedTree(root, maxDepth);
+                myApp.setTree(tree);
+            } else {
+                
+                String maxDepthText = tfMaxDepth.getText();
+                if (maxDepthText.isEmpty()) {
+                    throw new IllegalArgumentException("Max depth is empty.");
+                }
+                int maxDepth = Integer.parseInt(maxDepthText);
+                
+                BalancedBinaryTree tree = new BalancedBinaryTree(root, maxDepth);
+                myApp.setTree(tree);
+            }
+
+            
+            myApp.switchToTreeScreen();
+
+        } catch (NumberFormatException e) {
+            AlertUtil.warning("Invalid value", "Please enter valid integer values.");
+        } catch (IllegalArgumentException e) {
+        	AlertUtil.warning("Invalid value", e.getMessage());
         }
-        
-        
-    	myApp.switchToTreeScreen();
 
     }
     
@@ -133,6 +160,9 @@ public class MainController implements Initializable{
 		helpPane.setVisible(false);
     	createTreePane.setVisible(true);
     	this.depthContainer.setVisible(false);
+    	
+
+    	
 
 		
 	}
