@@ -1,7 +1,7 @@
 # Member and assignment:
 - Phan Viet Anh - 20225566: leader, implement the tree screen controller class.
 - Nguyen The Hung - 20225573: design the class diagram, implement the main menu, tree screen and main menu controller class.
-- Le Hai Nhat - 20225583: implement the algorithm class of the tree data structure.
+- Le Hai Nhat - 20225583: implement the algorithm class of the tree data structure, GUI modify.
 
 # Tech Stacks:
 - Java 17, 21 library.
