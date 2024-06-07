@@ -22,8 +22,9 @@ public class MyApp extends Application {
 	}
 	
 	public void switchToTreeScreen() {
-		primaryStage.setScene(treescreen);
 		primaryStage.setResizable(true);
+		primaryStage.setScene(treescreen);
+		primaryStage.setResizable(false);
 	}
 	
 

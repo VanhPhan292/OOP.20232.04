@@ -19,6 +19,7 @@ import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -36,13 +37,31 @@ public class TreeSceneController implements Initializable {
 	private GenericTree tree;
 	
 	
-//	private TreeScreen treeScreen;
+
 	
     private StackPane rootNode;
     
     private String choiceTraversal = new String("BFS");
     
     private int historyInsert;
+    
+    @FXML
+    private Label bfsPseudoCode1;
+
+    @FXML
+    private Label bfsPseudoCode2;
+
+    @FXML
+    private Label bfsPseudoCode3;
+
+    @FXML
+    private Label bfsPseudoCode4;
+    
+    @FXML
+    private AnchorPane BFScode;
+
+    @FXML
+    private AnchorPane DFScode;
     
     @FXML
     private Label pseudoCode1;
@@ -59,12 +78,6 @@ public class TreeSceneController implements Initializable {
     @FXML
     private Label pseudoCode5;
     
-
-    @FXML
-    private VBox bfsPseudoCode;
-
-    @FXML
-    private VBox dfsPseudoCode;
 
     @FXML
     private Pane drawingPane;
@@ -136,6 +149,8 @@ public class TreeSceneController implements Initializable {
 		this.warningLabel.setVisible(false);
 		this.navigationBox.setVisible(false);
 		this.stepBox.setVisible(false);
+		this.DFScode.setVisible(false);
+		this.BFScode.setVisible(false);
 	}
 	
 //INSERT TAB PANE
@@ -325,11 +340,11 @@ public class TreeSceneController implements Initializable {
     	
     	
     	if(this.choiceTraversal.equals("BFS")) {
-    		bfsPseudoCode.setVisible(true);
+    		BFScode.setVisible(true);
     		traversalBFS();
     		
     	}else if (choiceTraversal.equals("DFS")) {
-    		dfsPseudoCode.setVisible(true);
+    		DFScode.setVisible(true);
     		traversalDFS();
     	}
     }
@@ -347,8 +362,8 @@ public class TreeSceneController implements Initializable {
     	pseudoCode2.setVisible(false);
     	pseudoCode3.setVisible(false);
     	pseudoCode4.setVisible(false);
-    	bfsPseudoCode.setVisible(false);
-    	dfsPseudoCode.setVisible(false);
+    	BFScode.setVisible(false);
+    	DFScode.setVisible(false);
     	queueFlowPane.setVisible(false);
     	
     	
@@ -372,19 +387,15 @@ public class TreeSceneController implements Initializable {
 
     }
     
-    
-    
-    
-    
 
     @FXML
     void btnTraversalForwardPressed(ActionEvent event) {
     	if (this.choiceTraversal.equals("BFS")) {
-	    	codeUpdate();
+	    	codeUpdateBFS();
 	    	tree.forwardBFS();
 	    	queueUpdate();
     	} else if (this.choiceTraversal.equals("DFS")) {
-    		codeUpdate();
+    		codeUpdateDFS();
     		tree.forwardDFS();
     		queueUpdate();
     	}
@@ -393,23 +404,23 @@ public class TreeSceneController implements Initializable {
     @FXML
     void btnTraversalBackwardPressed(ActionEvent event) {
     	if (this.choiceTraversal.equals("BFS")) {
-	    	codeUpdate();
+	    	codeUpdateBFS();
 	    	tree.backBFS();
 	    	queueUpdate();
     	} else if (this.choiceTraversal.equals("DFS")) {
-    		codeUpdate();
+    		codeUpdateDFS();
     		tree.backDFS();
     		queueUpdate();
     	}
     }
 
 
-    
     void traversalBFS() {
+    	
     	KeyFrame step = new KeyFrame(Duration.seconds(1), 
 				new EventHandler<ActionEvent>() {
 			  		public void handle(ActionEvent event) {
-			  			codeUpdate();
+			  			codeUpdateBFS();
 			  			tree.forwardBFS();
 			  			queueUpdate();
 			  		}
@@ -427,13 +438,15 @@ public class TreeSceneController implements Initializable {
     	
     	tree.setTimeline(timeline);
     	tree.getTimeline().play();
+    	
     }
     
     void traversalDFS() {
+    	
     	KeyFrame step = new KeyFrame(Duration.seconds(1),
     			new EventHandler<ActionEvent>() {
     				public void handle(ActionEvent event) {
-    					codeUpdate();
+    					codeUpdateDFS();
     					tree.forwardDFS();
     					queueUpdate();
     				}
@@ -450,6 +463,8 @@ public class TreeSceneController implements Initializable {
     	
     	tree.setTimeline(timeline);
     	tree.getTimeline().play();
+    	
+
     }
     
     void queueUpdate() {
@@ -468,19 +483,34 @@ public class TreeSceneController implements Initializable {
     	}
     }
     
-    
-    void codeUpdate() {
+    void codeUpdateBFS() {
     	if (tree.getState() == 2) {
-				pseudoCode1.setTextFill(Color.LIGHTBLUE);
-				pseudoCode2.setTextFill(Color.LIGHTBLUE);
-				pseudoCode3.setTextFill(Color.WHITE);
-				pseudoCode4.setTextFill(Color.WHITE);
+    		bfsPseudoCode1.setTextFill(Color.BLUE);
+    		bfsPseudoCode2.setTextFill(Color.BLUE);
+    		bfsPseudoCode3.setTextFill(Color.BLACK);
+    		bfsPseudoCode4.setTextFill(Color.BLACK);
+
+		} else if (tree.getState() == 1) {
+			bfsPseudoCode3.setTextFill(Color.BLUE);
+			bfsPseudoCode4.setTextFill(Color.BLUE);
+			bfsPseudoCode1.setTextFill(Color.BLACK);
+			bfsPseudoCode2.setTextFill(Color.BLACK);
+		}
+    }
+
+    
+    void codeUpdateDFS() {
+    	if (tree.getState() == 2) {
+				pseudoCode2.setTextFill(Color.BLUE);
+				pseudoCode3.setTextFill(Color.BLUE);
+				pseudoCode4.setTextFill(Color.BLACK);
+				pseudoCode5.setTextFill(Color.BLACK);
 
 			} else if (tree.getState() == 1) {
-				pseudoCode3.setTextFill(Color.LIGHTBLUE);
-				pseudoCode4.setTextFill(Color.LIGHTBLUE);
-				pseudoCode1.setTextFill(Color.WHITE);
-				pseudoCode2.setTextFill(Color.WHITE);
+				pseudoCode4.setTextFill(Color.BLUE);
+				pseudoCode5.setTextFill(Color.BLUE);
+				pseudoCode2.setTextFill(Color.BLACK);
+				pseudoCode3.setTextFill(Color.BLACK);
 			}
     }
 	
