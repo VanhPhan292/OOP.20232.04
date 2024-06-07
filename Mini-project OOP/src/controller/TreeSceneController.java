@@ -29,6 +29,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import util.AlertUtil;
 
 public class TreeSceneController implements Initializable {
 	
@@ -156,20 +157,35 @@ public class TreeSceneController implements Initializable {
 //INSERT TAB PANE
 	 @FXML
 	 public void btnInsertPressed(ActionEvent event) {
-		 this.btnInsertUndo.setVisible(true);
-		 if(!Node.listValue.contains(Integer.parseInt(this.tfInsertChild.getText()))) {
-			 Node childNode = new Node(Integer.parseInt(this.tfInsertChild.getText()));
-			 if (tree.insertNode(Integer.parseInt(this.tfInsertParent.getText()), childNode)) {
-				 this.historyInsert = childNode.getValue();
-				 this.drawingPane.getChildren().add(childNode);
-				 this.drawingPane.getChildren().add(childNode.getParentLine());
+		 try {
+			 String parentNodeValue = this.tfInsertParent.getText();
+			 String childNodeValue = this.tfInsertChild.getText();
+			 if(parentNodeValue.isEmpty() || childNodeValue.isEmpty()) {
+				 throw new IllegalArgumentException("Parent value or child value is empty");
 			 }
-			 this.tfInsertChild.clear();
+			 this.btnInsertUndo.setVisible(true);
+			 if(!Node.listValue.contains(Integer.parseInt(childNodeValue))) {
+				 Node childNode = new Node(Integer.parseInt(childNodeValue));
+				 if (tree.insertNode(Integer.parseInt(parentNodeValue), childNode)) {
+					 this.historyInsert = childNode.getValue();
+					 this.drawingPane.getChildren().add(childNode);
+					 this.drawingPane.getChildren().add(childNode.getParentLine());
+				 }
+				 this.tfInsertChild.clear();
+				 
+			 }else {
+				 this.tfInsertChild.clear();
+				 AlertUtil.warning("Insertion Error", "Added node already exist!");
+			 }
+		 
 			 
-		 }else {
-			 this.tfInsertChild.clear();
-			 JOptionPane.showMessageDialog(null, "Added node already exist!");
+		 }catch(NumberFormatException e) {
+			 AlertUtil.warning("Insertion Error", "Please enter integer value");
+			 
+		 }catch(IllegalArgumentException e ) {
+			 AlertUtil.warning("Insertion Error", e.getMessage());
 		 }
+		 
 	 }
 	 
 	 @FXML
@@ -183,17 +199,33 @@ public class TreeSceneController implements Initializable {
 		 Node parent = node.getParentNode();
 		 parent.getChildNodes().remove(node);
 	 }
-	//DELETE TAB PANE
 	 
+	 
+	//DELETE TAB PANE
 	 @FXML
     public void btnDeleteNodePressed(ActionEvent event) {
-		 if (Node.listValue.contains(Integer.parseInt(this.tfDeleteValue.getText()))) {
-			 Node delNode = tree.searchNode(Integer.parseInt(this.tfDeleteValue.getText()));
-        	this.removeFromPane(delNode);
-        	tree.deleteNode(Integer.parseInt(this.tfDeleteValue.getText()));
-        }else{
-            JOptionPane.showMessageDialog(null, "Provided node not found!");
-        }
+		 try {
+			 String deleteNodeValue = this.tfDeleteValue.getText();
+			 if(deleteNodeValue.isEmpty()) {
+				 throw new IllegalArgumentException("Detele Node Value is empty");
+
+			 }
+			 
+			 if (Node.listValue.contains(Integer.parseInt(deleteNodeValue))) {
+				 Node delNode = tree.searchNode(Integer.parseInt(this.tfDeleteValue.getText()));
+				 this.removeFromPane(delNode);
+				 tree.deleteNode(Integer.parseInt(this.tfDeleteValue.getText()));
+			 }else{
+				 AlertUtil.warning("Deletion Error", "Provided node not found!");
+			 }
+			 
+	 	}catch(NumberFormatException e) {
+			 AlertUtil.warning("Deletion Error", "Please enter integer value");
+			 
+	 	}catch(IllegalArgumentException e ) {
+			 AlertUtil.warning("Deletion Error", e.getMessage());
+	 	}
+		 
     }
 	
 	void removeFromPane(Node removeNode) {
@@ -219,90 +251,129 @@ public class TreeSceneController implements Initializable {
 	 
 	//UPDATE TAB PANE
 	@FXML
+	
     public void buttonUpdatePressed(ActionEvent event) {
-		if (Node.listValue.contains(Integer.parseInt(this.tfUpdateOldValue.getText()))) {
-            if (!Node.listValue.contains(Integer.parseInt(this.tfUpdateNewValue.getText()))) {
-	            Node oldNode = tree.searchNode(Integer.parseInt(this.tfUpdateOldValue.getText()));
-	            oldNode.setValue(Integer.parseInt(this.tfUpdateNewValue.getText()));    
-            } else {
-                JOptionPane.showMessageDialog(null, "New node has been in tree!");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Node not found!");
-        }
+		try {
+			 String oldNodeValue = this.tfUpdateOldValue.getText();
+			 String newNodeValue = this.tfUpdateNewValue.getText();
+			 if(oldNodeValue.isEmpty() || newNodeValue.isEmpty()) {
+				 
+				 throw new IllegalArgumentException("Detele Node Value is empty");
+
+			 }
+			 if (Node.listValue.contains(Integer.parseInt(oldNodeValue))) {
+		            if (!Node.listValue.contains(Integer.parseInt(newNodeValue))) {
+			            Node oldNode = tree.searchNode(Integer.parseInt(newNodeValue));
+			            oldNode.setValue(Integer.parseInt(this.tfUpdateNewValue.getText()));    
+		            } else {
+		   			 AlertUtil.warning("Updation Error", "This new node value is not avalable");
+
+		            }
+		        } else {
+		   			 AlertUtil.warning("Updation Error", "The old node is not found in this tree");
+
+		        }
+			 
+			 
+			 
+	 	}catch(NumberFormatException e) {
+			 AlertUtil.warning("Updation Error", "Please enter integer value");
+			 
+	 	}catch(IllegalArgumentException e ) {
+			 AlertUtil.warning("Updation Error", e.getMessage());
+	 	}
+		
     }
 	
 	
 	//SEARCH TAB PANE
 	@FXML
     void btnSearchPressed(ActionEvent event) {
-    	Node searchedNode = tree.searchNode(Integer.parseInt(this.tfSearchValue.getText()));
-        Timeline timeline = new Timeline();
-        tree.setState(1);
+		try {
+			 String searchNodeValue = this.tfSearchValue.getText();
+			 if(searchNodeValue.isEmpty()) {
+				 
+				 throw new IllegalArgumentException("Searching Node Value is empty");
 
-        KeyFrame popQueue = new KeyFrame(Duration.seconds(1),
-                new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent event) {
-                        if (tree.getState() == 1) {
-                            if (!tree.getQueue().isEmpty()) {
-                                tree.setCurrentNode(tree.getQueue().getFirst());
-                                tree.getQueue().removeFirst();
-                                tree.getTraveledNode().add(tree.getCurrentNode());
-                                tree.getCurrentNode().getCircle().setFill(Color.LIGHTCORAL);
-                                tree.setState(2);
+			 }
+			 Node searchedNode = tree.searchNode(Integer.parseInt(searchNodeValue));
+		        Timeline timeline = new Timeline();
+		        tree.setState(1);
 
-                                if (tree.getCurrentNode() == searchedNode){         //them dieu kien
-                                    for (int i:Node.listValue){
-                                        Node node = tree.searchNode(i);
-                                        node.getCircle().setFill(Color.WHITE);
-                                    }
-                                    searchedNode.getCircle().setFill(Color.LIGHTGREEN);
-                                    timeline.stop();
+		        KeyFrame popQueue = new KeyFrame(Duration.seconds(1),
+		                new EventHandler<ActionEvent>() {
+		                    public void handle(ActionEvent event) {
+		                        if (tree.getState() == 1) {
+		                            if (!tree.getQueue().isEmpty()) {
+		                                tree.setCurrentNode(tree.getQueue().getFirst());
+		                                tree.getQueue().removeFirst();
+		                                tree.getTraveledNode().add(tree.getCurrentNode());
+		                                tree.getCurrentNode().getCircle().setFill(Color.LIGHTCORAL);
+		                                tree.setState(2);
 
-                                    Timeline resetToWhite = new Timeline();
-                                    KeyFrame reset = new KeyFrame(Duration.seconds(2),
-                                            new EventHandler<ActionEvent>() {
-                                                public void handle(ActionEvent event) {
-                                                    for (int i:Node.listValue){
-                                                        Node node = tree.searchNode(i);
-                                                        node.getCircle().setFill(Color.WHITE);
-                                                    }
-                                                }
-                                            } );
-                                    resetToWhite.getKeyFrames().add(reset);
-                                    resetToWhite.play();
-                                }
+		                                if (tree.getCurrentNode() == searchedNode){         //them dieu kien
+		                                    for (int i:Node.listValue){
+		                                        Node node = tree.searchNode(i);
+		                                        node.getCircle().setFill(Color.WHITE);
+		                                    }
+		                                    searchedNode.getCircle().setFill(Color.LIGHTGREEN);
+		                                    timeline.stop();
 
-                            } else {
-                                timeline.stop();
-                                JOptionPane.showMessageDialog(null, "Node not found!");
-                            }
-                        }
-                    }
-                } );
-        KeyFrame pushQueue = new KeyFrame(Duration.seconds(2),
-                new EventHandler<ActionEvent>() {
-                    public void handle(ActionEvent event) {
-                        if (tree.getState() == 2) {
-                            if (!tree.getCurrentNode().getChildNodes().isEmpty()) {
-                                for (Node node: tree.getCurrentNode().getChildNodes()) {
-                                    tree.getQueue().add(node);
-                                    node.getCircle().setFill(Color.LIGHTYELLOW);
-                                }
-                            }
-                            tree.setState(1);
-                        }
-                    }
-                } );
+		                                    Timeline resetToWhite = new Timeline();
+		                                    KeyFrame reset = new KeyFrame(Duration.seconds(2),
+		                                            new EventHandler<ActionEvent>() {
+		                                                public void handle(ActionEvent event) {
+		                                                    for (int i:Node.listValue){
+		                                                        Node node = tree.searchNode(i);
+		                                                        node.getCircle().setFill(Color.WHITE);
+		                                                    }
+		                                                }
+		                                            } );
+		                                    resetToWhite.getKeyFrames().add(reset);
+		                                    resetToWhite.play();
+		                                }
+
+		                            } else {
+		                                timeline.stop();
+		                                AlertUtil.warning("Search Error", "Searching node is not found");
+		                            }
+		                        }
+		                    }
+		                } );
+		        KeyFrame pushQueue = new KeyFrame(Duration.seconds(2),
+		                new EventHandler<ActionEvent>() {
+		                    public void handle(ActionEvent event) {
+		                        if (tree.getState() == 2) {
+		                            if (!tree.getCurrentNode().getChildNodes().isEmpty()) {
+		                                for (Node node: tree.getCurrentNode().getChildNodes()) {
+		                                    tree.getQueue().add(node);
+		                                    node.getCircle().setFill(Color.LIGHTYELLOW);
+		                                }
+		                            }
+		                            tree.setState(1);
+		                        }
+		                    }
+		                } );
 
 
-        tree.setQueue(new LinkedList<Node>());
-        tree.setTraveledNode(new LinkedList<Node>());
-        tree.getQueue().add(tree.getRootNode());
-        timeline.getKeyFrames().add(popQueue);
-        timeline.getKeyFrames().add(pushQueue);
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+		        tree.setQueue(new LinkedList<Node>());
+		        tree.setTraveledNode(new LinkedList<Node>());
+		        tree.getQueue().add(tree.getRootNode());
+		        timeline.getKeyFrames().add(popQueue);
+		        timeline.getKeyFrames().add(pushQueue);
+		        timeline.setCycleCount(Timeline.INDEFINITE);
+		        timeline.play();
+			 
+			 
+			 
+			 
+	 	}catch(NumberFormatException e) {
+			 AlertUtil.warning("Search Error", "Please enter integer value");
+			 
+	 	}catch(IllegalArgumentException e ) {
+			 AlertUtil.warning("Search Error", e.getMessage());
+	 	}
+    	
     }
 
 	//TRAVERSAL TAB PANE
