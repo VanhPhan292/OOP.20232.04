@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+   <top>
+      <HBox alignment="CENTER" prefHeight="62.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label prefHeight="27.0" prefWidth="267.0" text="Tree Data Structure Visualization">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+   <left>
+      <VBox prefHeight="50.0" prefWidth="110.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onAction="#showCreate" text="Create new tree" />
+            <Button mnemonicParsing="false" onAction="#showHelp" prefHeight="25.0" prefWidth="100.0" text="Help" />
+            <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#quit" prefHeight="25.0" prefWidth="100.0" text="Quit" />
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="5.0" right="5.0" top="10.0" />
+         </padding>
+      </VBox>
+   </left>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <StackPane prefHeight="380.0" prefWidth="612.0">
+               <children>
+                  <AnchorPane fx:id="createTreePane" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <VBox layoutX="26.0" layoutY="22.0" prefHeight="200.0" prefWidth="165.0" spacing="10.0">
+                           <children>
+                              <RadioButton mnemonicParsing="false" onAction="#buttonGenericTreePressed" text="Generic Tree">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="treeType" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" onAction="#buttonBinaryTreePressed" text="Binary Tree" toggleGroup="$treeType" />
+                              <RadioButton mnemonicParsing="false" onAction="#buttonBalancedTreePressed" text="Balanced Tree" toggleGroup="$treeType" />
+                              <RadioButton mnemonicParsing="false" onAction="#buttonBalancedBinaryTreePressed" text="Balanced Binary Tree" toggleGroup="$treeType" />
+                              <Button mnemonicParsing="false" onAction="#createTree" text="Create" />
+                           </children>
+                        </VBox>
+                        <HBox layoutX="237.0" layoutY="22.0" prefHeight="57.0" prefWidth="200.0">
+                           <children>
+                              <Label prefWidth="150.0" text="RootNode 's value " />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="tfRootValue" prefHeight="25.0" prefWidth="100.0" />
+                           </children>
+                        </HBox>
+                        <HBox fx:id="depthContainer" layoutX="237.0" layoutY="80.0" prefHeight="63.0" prefWidth="200.0">
+                           <children>
+                              <Label prefWidth="150.0" text="Max depth difference" />
+                              <Region HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="tfMaxDepth" prefHeight="25.0" prefWidth="100.0" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="helpPane" prefHeight="248.0" prefWidth="438.0">
+                     <children>
+                        <ImageView fitHeight="405.0" fitWidth="623.0" layoutX="19.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <image>
+                              <Image url="@help.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </StackPane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
