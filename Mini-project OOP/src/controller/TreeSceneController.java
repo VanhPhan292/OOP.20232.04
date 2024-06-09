@@ -263,7 +263,7 @@ public class TreeSceneController implements Initializable {
 			 }
 			 if (Node.listValue.contains(Integer.parseInt(oldNodeValue))) {
 		            if (!Node.listValue.contains(Integer.parseInt(newNodeValue))) {
-			            Node oldNode = tree.searchNode(Integer.parseInt(newNodeValue));
+			            Node oldNode = tree.searchNode(Integer.parseInt(oldNodeValue));
 			            oldNode.setValue(Integer.parseInt(this.tfUpdateNewValue.getText()));    
 		            } else {
 		   			 AlertUtil.warning("Updation Error", "This new node value is not avalable");
