@@ -162,9 +162,6 @@ public class MainController implements Initializable{
     	createTreePane.setVisible(true);
     	this.depthContainer.setVisible(false);
     	
-
-    	
-
 		
 	}
 

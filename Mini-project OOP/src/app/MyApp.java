@@ -64,7 +64,5 @@ public class MyApp extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
     }
-	
-	
 
 }
