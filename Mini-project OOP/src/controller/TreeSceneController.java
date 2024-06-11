@@ -163,6 +163,9 @@ public class TreeSceneController implements Initializable {
 			 if(parentNodeValue.isEmpty() || childNodeValue.isEmpty()) {
 				 throw new IllegalArgumentException("Parent value or child value is empty");
 			 }
+			 if (!Node.listValue.contains(Integer.parseInt(parentNodeValue))) {
+				 throw new Exception("Parent value does not existed");
+			 }
 			 this.btnInsertUndo.setVisible(true);
 			 if(!Node.listValue.contains(Integer.parseInt(childNodeValue))) {
 				 Node childNode = new Node(Integer.parseInt(childNodeValue));
@@ -184,8 +187,10 @@ public class TreeSceneController implements Initializable {
 			 
 		 }catch(IllegalArgumentException e ) {
 			 AlertUtil.warning("Insertion Error", e.getMessage());
-		 }
-		 
+		 } catch (Exception e) {
+			// TODO Auto-generated catch block
+			 AlertUtil.warning("Insertion Error", "Please enter valid integer value");
+		}
 	 }
 	 
 	 @FXML
